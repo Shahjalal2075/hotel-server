@@ -31,6 +31,7 @@ async function run() {
     const database = client.db("hotelDB");
     const usersCollectionStunning = database.collection("stunning");
     const usersCollectionTestimonials = database.collection("testimonials");
+    const usersCollectionRooms = database.collection("rooms");
 
     app.get('/stunning', async (req, res) => {
       const cursor = usersCollectionStunning.find()
@@ -40,6 +41,12 @@ async function run() {
 
     app.get('/testimonials', async (req, res) => {
       const cursor = usersCollectionTestimonials.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/rooms', async (req, res) => {
+      const cursor = usersCollectionRooms.find()
       const result = await cursor.toArray();
       res.send(result);
     })
