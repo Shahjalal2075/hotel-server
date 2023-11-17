@@ -38,6 +38,11 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/testimonials', async (req, res) => {
+      const cursor = usersCollectionTestimonials.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
     /*
     
