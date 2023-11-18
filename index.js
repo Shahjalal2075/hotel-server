@@ -109,6 +109,14 @@ async function run() {
       res.send(result);
     })
 
+    app.delete('/booking/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log('delete server id: ', id);
+      const cursor = { _id: new ObjectId(id) };
+      const result = await usersCollectionRoomBooking.deleteOne(cursor);
+      res.send(result);
+    })
+
 
     /*
     
