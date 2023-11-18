@@ -80,6 +80,13 @@ async function run() {
       res.send(result);
     })
 
+    app.post('/booking', async (req, res) => {
+      const room = req.body;
+      console.log('new room', room);
+      const result = await usersCollectionRoomBooking.insertOne(room);
+      res.send(result);
+    })
+
 
     /*
     
