@@ -67,7 +67,9 @@ async function run() {
       console.log(updateRoom);
       const updateDoc={
         $set: {
-          available: updateRoom.available
+          available: updateRoom.available,
+          review: updateRoom.review,
+          star: updateRoom.star
         }
       }
       const result = await usersCollectionRooms.updateOne(query,updateDoc);
@@ -114,6 +116,20 @@ async function run() {
       console.log('delete server id: ', id);
       const cursor = { _id: new ObjectId(id) };
       const result = await usersCollectionRoomBooking.deleteOne(cursor);
+      res.send(result);
+    })
+
+    app.patch('/booking/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updateRoom = req.body;
+      console.log(updateRoom);
+      const updateDoc={
+        $set: {
+          review: updateRoom.review
+        }
+      }
+      const result = await usersCollectionRoomBooking.updateOne(query,updateDoc);
       res.send(result);
     })
 
