@@ -33,6 +33,7 @@ async function run() {
     const usersCollectionTestimonials = database.collection("testimonials");
     const usersCollectionRooms = database.collection("rooms");
     const usersCollectionRoomPhotos = database.collection("roomPhotos");
+    const usersCollectionRoomBooking = database.collection("booking");
 
     app.get('/stunning', async (req, res) => {
       const cursor = usersCollectionStunning.find()
@@ -72,6 +73,13 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     })
+
+    app.get('/booking', async (req, res) => {
+      const cursor = usersCollectionRoomBooking.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
 
     /*
     
