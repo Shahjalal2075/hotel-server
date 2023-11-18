@@ -52,7 +52,12 @@ async function run() {
       res.send(result);
     })
 
-    
+    app.get('/rooms/:title', async (req, res) => {
+      const title = req.params.title;
+      const query = { title: title }
+      const result = await usersCollectionRooms.findOne(query);
+      res.send(result);
+    })
 
     app.get('/roomPhotos', async (req, res) => {
       const cursor = usersCollectionRoomPhotos.find()
