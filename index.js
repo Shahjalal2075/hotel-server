@@ -52,8 +52,18 @@ async function run() {
       res.send(result);
     })
 
-    app.get('/roomphotos', async (req, res) => {
+    
+
+    app.get('/roomPhotos', async (req, res) => {
       const cursor = usersCollectionRoomPhotos.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/roomPhotos/:title', async (req, res) => {
+      const title = req.params.title;
+      const query = { title: title }
+      const cursor = usersCollectionRoomPhotos.find(query);
       const result = await cursor.toArray();
       res.send(result);
     })
