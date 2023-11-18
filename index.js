@@ -80,6 +80,14 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/booking/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email }
+      const cursor = usersCollectionRoomBooking.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
     app.post('/booking', async (req, res) => {
       const room = req.body;
       console.log('new room', room);
