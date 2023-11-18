@@ -60,6 +60,20 @@ async function run() {
       res.send(result);
     })
 
+    app.patch('/rooms/:title', async (req, res) => {
+      const title = req.params.title;
+      const query = { title: title }
+      const updateRoom = req.body;
+      console.log(updateRoom);
+      const updateDoc={
+        $set: {
+          available: updateRoom.available
+        }
+      }
+      const result = await usersCollectionRooms.updateOne(query,updateDoc);
+      res.send(result);
+    })
+
     app.get('/roomPhotos', async (req, res) => {
       const cursor = usersCollectionRoomPhotos.find()
       const result = await cursor.toArray();
