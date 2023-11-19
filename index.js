@@ -34,6 +34,7 @@ async function run() {
     const usersCollectionRooms = database.collection("rooms");
     const usersCollectionRoomPhotos = database.collection("roomPhotos");
     const usersCollectionRoomBooking = database.collection("booking");
+    const usersCollectionRoomReview = database.collection("review");
 
     app.get('/stunning', async (req, res) => {
       const cursor = usersCollectionStunning.find()
@@ -130,6 +131,27 @@ async function run() {
         }
       }
       const result = await usersCollectionRoomBooking.updateOne(query,updateDoc);
+      res.send(result);
+    })
+
+    app.get('/review', async (req, res) => {
+      const cursor = usersCollectionRoomReview.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/review/:title', async (req, res) => {
+      const title = req.params.title;
+      const query = { title: title }
+      const cursor = usersCollectionRoomReview.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.post('/review', async (req, res) => {
+      const room = req.body;
+      console.log('new review', room);
+      const result = await usersCollectionRoomReview.insertOne(room);
       res.send(result);
     })
 
