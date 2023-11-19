@@ -105,6 +105,23 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/booking/:email/:review', async (req, res) => {
+      const review = req.params.review;
+      const query = { review: review }
+      const cursor = usersCollectionRoomBooking.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/booking/:email/:date/:title', async (req, res) => {
+      const title = req.params.title;
+      const date = req.params.date;
+      const query = { title: title,date:date }
+      const cursor = usersCollectionRoomBooking.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
     app.post('/booking', async (req, res) => {
       const room = req.body;
       console.log('new room', room);
@@ -120,9 +137,10 @@ async function run() {
       res.send(result);
     })
 
-    app.patch('/booking/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
+    app.patch('/booking/:email/:review', async (req, res) => {
+      const email = req.params.email;
+      const review = req.params.review;
+      const query = { email: email,review:review }
       const updateRoom = req.body;
       console.log(updateRoom);
       const updateDoc={
