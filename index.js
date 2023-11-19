@@ -66,14 +66,14 @@ async function run() {
       const query = { title: title }
       const updateRoom = req.body;
       console.log(updateRoom);
-      const updateDoc={
+      const updateDoc = {
         $set: {
           available: updateRoom.available,
           review: updateRoom.review,
           star: updateRoom.star
         }
       }
-      const result = await usersCollectionRooms.updateOne(query,updateDoc);
+      const result = await usersCollectionRooms.updateOne(query, updateDoc);
       res.send(result);
     })
 
@@ -105,9 +105,11 @@ async function run() {
       res.send(result);
     })
 
-    app.get('/booking/:email/:review', async (req, res) => {
+    app.get('/booking/:email/:title/:review', async (req, res) => {
       const review = req.params.review;
-      const query = { review: review }
+      const email = req.params.email;
+      const title = req.params.title;
+      const query = { email: email, title: title, review: review }
       const cursor = usersCollectionRoomBooking.find(query);
       const result = await cursor.toArray();
       res.send(result);
@@ -116,7 +118,7 @@ async function run() {
     app.get('/booking/:email/:date/:title', async (req, res) => {
       const title = req.params.title;
       const date = req.params.date;
-      const query = { title: title,date:date }
+      const query = { title: title, date: date }
       const cursor = usersCollectionRoomBooking.find(query);
       const result = await cursor.toArray();
       res.send(result);
@@ -137,18 +139,33 @@ async function run() {
       res.send(result);
     })
 
-    app.patch('/booking/:email/:review', async (req, res) => {
-      const email = req.params.email;
-      const review = req.params.review;
-      const query = { email: email,review:review }
+    app.patch('/booking/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
       const updateRoom = req.body;
       console.log(updateRoom);
-      const updateDoc={
+      const updateDoc = {
+        $set: {
+          date: updateRoom.date
+        }
+      }
+      const result = await usersCollectionRoomBooking.updateOne(query, updateDoc);
+      res.send(result);
+    })
+
+    app.patch('/booking/:email/:title/:review', async (req, res) => {
+      const review = req.params.review;
+      const email = req.params.email;
+      const title = req.params.title;
+      const query = { email: email, title: title, review: review }
+      const updateRoom = req.body;
+      console.log(updateRoom);
+      const updateDoc = {
         $set: {
           review: updateRoom.review
         }
       }
-      const result = await usersCollectionRoomBooking.updateOne(query,updateDoc);
+      const result = await usersCollectionRoomBooking.updateOne(query, updateDoc);
       res.send(result);
     })
 
